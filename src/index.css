@@ -8,8 +8,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-Link {
+a {
   color: white;
+  text-decoration: none;
 }
 
 code {
