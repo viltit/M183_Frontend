@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Doctors from './components/doctors';
+import Navbar from './components/navbar';
 
 class App extends Component {
 
@@ -21,9 +22,12 @@ class App extends Component {
       )
   }
 
-  render () {
+  render () { 
     return (
-      <Doctors doctors={this.state.doctors}/>
+      <div>
+          <Navbar/>
+        <Doctors doctors={this.state.doctors}/>
+      </div>
     );
   }
 }
