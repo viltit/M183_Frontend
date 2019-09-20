@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Route } from 'react-router-dom';
 import Doctors from './components/doctors';
 import DoctorPatient from './components/doctorDetail'
+import AddUser from './components/addDoctor'
 import Navbar from './components/navbar';
 
 class App extends Component {
@@ -25,11 +26,13 @@ class App extends Component {
   }
 
   render () { 
+    // TODO: Secured path
     return (
       <div>
         <Navbar/>
         <Route exact path = '/doctors' component = { Doctors } />
         <Route exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
+        <Route exact path = '/newUser' component = { AddUser } />
       </div>
     );
   }

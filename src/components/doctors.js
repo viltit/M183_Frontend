@@ -8,7 +8,8 @@ class Doctors extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      doctors: null
+      doctors: null,
+      isAdmin: true
     }
   }
 
@@ -27,8 +28,20 @@ class Doctors extends Component {
   render() {
     return(
       <div className="container">
+        { /*  create new user 
+              TODO: Only show this menu to admin */}
+        { this.state.isAdmin &&  
+        <Link to="/newUser">
+              <div className="card text-white bg-secondary mb-3">
+                <div className="card-body">
+                  <h4 className="card-title">+ Add a new user</h4>
+                </div>
+              </div>
+        </Link>
+        }
         { this.state.doctors === null && <h5>Loading ...</h5>}
         { this.state.doctors && this.state.doctors.map((doctor, i) => (
+          <div>
             <div key={doctor.id} className="card text-white bg-dark mb-3" key={i}>
               <Link to={`/doctor/patients/${doctor.id}`}>
               <div class="card-header">{doctor.role}</div>
@@ -38,9 +51,10 @@ class Doctors extends Component {
               </div>
               </Link>
             </div>
+            </div>
           ))
         }
-      </div>
+        </div>
     )
   }
 }
