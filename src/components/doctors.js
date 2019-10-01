@@ -40,21 +40,40 @@ class Doctors extends Component {
         </Link>
         }
         { this.state.doctors === null && <h5>Loading ...</h5>}
+          <table className="table table-dark">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
         { this.state.doctors && this.state.doctors.map((doctor, i) => (
-          <div>
-            <div key={doctor.id} className="card text-white bg-dark mb-3" key={i}>
-              <Link to={`/doctor/patients/${doctor.id}`}>
-              <div class="card-header">{doctor.role}</div>
-              <div className="card-body">
-                <h5 className="card-title">{doctor.firstName} {doctor.lastName}</h5>
-                <p className="card-text">{doctor.email}</p>
-              </div>
-              </Link>
-            </div>
-            </div>
+                <tr>
+                  <td>{ doctor.firstName }</td> 
+                  <td>{ doctor.lastName }</td>
+                  <td>{ doctor.email }</td>
+                  <td>{ doctor.role }</td>
+                  <td><Link to={`/doctor/patients/${doctor.id}`}>Patients</Link></td>
+                  <td><Link to={ {
+                    /* TODO: Could we directl write in the Linked Components state ? */
+                    pathname: `/user/edit/${doctor.id}`,
+                    state: { 
+                      firstName: doctor.firstName ,
+                      lastName: doctor.lastName,
+                      email: doctor.email,
+                      role: doctor.role 
+                    }
+                  } }>Edit</Link></td>
+                </tr>
           ))
         }
+        </table>
         </div>
+        
     )
   }
 }

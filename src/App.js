@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Doctors from './components/doctors';
 import DoctorPatient from './components/doctorDetail'
 import AddUser from './components/addDoctor'
+import EditUser from './components/editDoctor'
 import Navbar from './components/navbar';
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
         <Route exact path = '/doctors' component = { Doctors } />
         <Route exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
         <Route exact path = '/newUser' component = { AddUser } />
+        <Route exact path = '/user/edit/:userID' component = { EditUser } />
       </div>
     );
   }
