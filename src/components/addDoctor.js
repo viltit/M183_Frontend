@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-// TODO: Authentification and Roles
 import axios from 'axios';
 
+// TODO IMPORTANT: Error or success message
+// TODO IMPORTANT: Authentification and Roles
 class AddDoctor extends Component {
 
     constructor(props) {

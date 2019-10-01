@@ -7,6 +7,7 @@ class EditDocor extends Component {
 
     // TODO: Include doctors data in constructor ?
     // TODO: Repeating code (see addDoctor.js)
+    // TODO IMPORTANT: Error or success message
     constructor(props) {
         super(props)
 
