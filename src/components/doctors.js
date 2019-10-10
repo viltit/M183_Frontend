@@ -9,19 +9,23 @@ class Doctors extends Component {
     super(props);
     this.state = {
       doctors: null,
-      isAdmin: true
+      isAdmin: true,
+      error: null
     }
   }
 
   // make the api call when this component is mounted:
   async componentDidMount() {
-    // TODO: Error handling ??
-    const doctors = (await axios.get('http://localhost:8080/api/users')).data;
-    
-    // changing the state will trigger ``render()``
-    this.setState({
-      doctors: doctors
-    })
+    axios.get('http://localhost:8080/api/users')
+      .then(response => {
+        this.setState({ doctors: response.data })
+      })
+      .catch(error => {
+        switch (error.response.status) {
+          case 401: this.setState({ error: "User is not authenticated" })
+          case 404: this.setState({ error: "Invalid route"})
+        }
+      })
   }
 
   // TODO: Add a link to edit each doctor
@@ -30,7 +34,12 @@ class Doctors extends Component {
       <div className="container">
         { /*  create new user 
               TODO: Only show this menu to admin */}
-        { this.state.isAdmin &&  
+        { this.state.error && 
+          <div class="alert alert-danger" role="alert">
+            Error while connecting to the server: { this.state.error }
+          </div>
+        }
+        { this.state.isAdmin && this.state.error == null && 
         <Link to="/newUser">
               <div className="card text-white bg-secondary mb-3">
                 <div className="card-body">
@@ -39,7 +48,7 @@ class Doctors extends Component {
               </div>
         </Link>
         }
-        { this.state.doctors === null && <h5>Loading ...</h5>}
+        { this.state.doctors === null && this.state.error == null && <h5>Loading ...</h5>}
           <table className="table table-dark">
               <thead>
                 <tr>
