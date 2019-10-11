@@ -60,8 +60,9 @@ class Doctors extends Component {
                   <th></th>
                 </tr>
               </thead>
+              <tbody>
         { this.state.doctors && this.state.doctors.map((doctor, i) => (
-                <tr>
+                <tr key={i}>
                   <td>{ doctor.firstName }</td> 
                   <td>{ doctor.lastName }</td>
                   <td>{ doctor.email }</td>
@@ -74,12 +75,13 @@ class Doctors extends Component {
                       firstName: doctor.firstName ,
                       lastName: doctor.lastName,
                       email: doctor.email,
-                      role: doctor.role 
+                      role: doctor.role
                     }
                   } }>Edit</Link></td>
                 </tr>
           ))
         }
+        </tbody>
         </table>
         </div>
         

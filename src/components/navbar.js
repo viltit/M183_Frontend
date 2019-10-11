@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import auth from './authenticate'
 
 // Navigation bar with login form
 // TODO: When user is already logged in, show logout-button
@@ -25,6 +26,7 @@ function Navbar() {
         .then(response => {
           setLogin(true)
           setError(null)
+          auth.authenticate()
         })
         .catch(error => {
           setError(error)
@@ -41,11 +43,13 @@ function Navbar() {
         .then(response => {
             setLogin(false)
             setError(null)
+            auth.authenticate()
         })
         .catch( e => {
             // error or not, we log out
             setLogin(false)
             setError(null)
+            auth.authenticate()
         })
     }
 
@@ -82,6 +86,12 @@ function Navbar() {
                 </form>
             }
             </nav>
+            { /* invalid login */ }
+            { error !== null && 
+                <div className="alert alert-danger" role="alert">
+                    Invalid username or password.
+                </div>
+            }
         </div>
     );
 }

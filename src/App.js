@@ -32,10 +32,10 @@ class App extends Component {
     return (
       <div>
         <Navbar/>
-        <Route exact path = '/doctors' component = { Doctors } />
-        <Route exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
-        <Route exact path = '/newUser' component = { AddUser } />
-        <Route exact path = '/user/edit/:userID' component = { EditUser } />
+        <PrivateRoute exact path = '/doctors' component = { Doctors } />
+        <PrivateRoute exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
+        <PrivateRoute exact path = '/newUser' component = { AddUser } />
+        <PrivateRoute exact path = '/user/edit/:userID' component = { EditUser } />
       </div>
     );
   }
