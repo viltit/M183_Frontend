@@ -16,13 +16,13 @@ class Doctors extends Component {
 
   // make the api call when this component is mounted:
   async componentDidMount() {
-    axios.get('http://localhost:8080/api/users')
+    await axios.get('http://localhost:8080/api/users', { withCredentials: true })
       .then(response => {
         this.setState({ doctors: response.data })
       })
       .catch(error => {
         switch (error.response.status) {
-          case 401: this.setState({ error: "User is not authenticated" })
+          case 401: this.setState({ error: "User is not authenticated" }); break
           case 404: this.setState({ error: "Invalid route"})
         }
       })
@@ -35,7 +35,7 @@ class Doctors extends Component {
         { /*  create new user 
               TODO: Only show this menu to admin */}
         { this.state.error && 
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             Error while connecting to the server: { this.state.error }
           </div>
         }

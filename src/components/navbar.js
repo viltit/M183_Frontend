@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 // Navigation bar with login form
@@ -10,46 +11,78 @@ function Navbar() {
     // For now it it sufficient to understand that we can store the current value of variables we need to track here:
     const [email, setEmail] = useState("")
     const [password, setPassword]  = useState("")
+    const [isLoggedIn, setLogin] = useState("")
+    const [error, setError] = useState("")
 
-    function handleSubmit(event) {
+    function handleLoginSubmit(event) {
         event.preventDefault()
+ 
         axios.post('http://localhost:8080/login/', {
             email: email,
-            password: password
+            password: password },
+            { withCredentials: true 
         })
         .then(response => {
-          console.log(response)
+          setLogin(true)
+          setError(null)
         })
         .catch(error => {
-          console.log("Error: ", error)
-          
+          setError(error)
+        })
+    }
+
+    function handleLogoutSubmit(event) {
+        event.preventDefault()
+
+        /*
+            I SPENT 4 HOURS FIGURING OUT WHY THE API CAN NOT LOG OUT until I realized we need withCredentials: true !!!
+        */
+        axios.get('http://localhost:8080/logout/', { withCredentials: true })
+        .then(response => {
+            setLogin(false)
+            setError(null)
+        })
+        .catch( e => {
+            // error or not, we log out
+            setLogin(false)
+            setError(null)
         })
     }
 
     return (
-        <nav className="navbar navbar-expand navbar-dark bg-dark fixed-top">
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-                <Link className="nav-link" to="/">
-                    Welcome
+        <div>
+            <nav className="navbar navbar-expand navbar-dark bg-dark fixed-top">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                    <Link className="nav-link" to="/">
+                        Welcome
+                    </Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to="/doctors">
+                    User overview
                 </Link>
-            </li>
-            <li className="nav-item">
-            <Link className="nav-link" to="/doctors">
-                User overview
-            </Link>
-            </li>
-        </ul>
+                </li>
+            </ul>
+            </div>
+            { /* Check if user logged out and redirect if so. It seems this works (ie., no inifinite redirect) */ }
+            { isLoggedIn == false && <Redirect to="/" /> }
+            { /* Check if user is logged in and show login form / logout button */ }
+            { isLoggedIn ?   
+                <button className="btn btn-outline-success my-2 my-sm-0" 
+                    type="submit" onClick={ e => handleLogoutSubmit(e) }>Log out</button>
+                :
+                <form className="form-inline" onSubmit={ handleLoginSubmit }>
+                    <input className="form-control mr-sm-2" type="email" placeholder="email" 
+                        aria-label="email" onChange={ e => setEmail(e.target.value) } />
+                    <input className="form-control mr-sm-2" type="password" placeholder="password" 
+                        aria-label="password" onChange={ e => setPassword(e.target.value) }/>
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
+                </form>
+            }
+            </nav>
         </div>
-        <form className="form-inline" onSubmit={ handleSubmit }>
-            <input className="form-control mr-sm-2" type="email" placeholder="email" 
-                aria-label="email" onChange={ e => setEmail(e.target.value) } />
-            <input className="form-control mr-sm-2" type="password" placeholder="password" 
-                aria-label="password" onChange={ e => setPassword(e.target.value) }/>
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
-        </form>
-        </nav>
     );
 }
 

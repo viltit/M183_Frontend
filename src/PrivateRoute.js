@@ -1,13 +1,32 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import axios from 'axios'  
 
-// !!!! TODO: STORING ACCESS TOKENS IN LOCAL STORAGE IS A SECURITY RISK. It can be read by ANY javascript code !!!
-// Better to use a cookie that only the server can read 
-// HOWEVER, this school project does not get credits for security, and for the sake of "getting it done", we use the local storage here
+/**
+ * Private Route for all Sites that need a User to be logged in
+ * We make an API request each time (this may not be the best solution). If apy throws an .unothroized, we redirect the User
+ * to the main page
+ */
+
+async function isAuthorized() {
+    await axios.get('http://localhost:8080/loginStatus/', { withCredentials: true })
+    .then(response => {
+        console.log(response)
+        return true
+    })
+    .catch( error => {
+        console.log(error)
+        return false
+    })
+}
+
+
 export const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-        localStorage.getItem('user')
+    <Route {...rest} render={ props => (
+        isAuthorized() === true 
             ? <Component {...props} />
-            : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+            : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
     )} />
-)
+) 
+
+export default PrivateRoute

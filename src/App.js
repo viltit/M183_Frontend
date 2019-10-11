@@ -5,6 +5,7 @@ import DoctorPatient from './components/doctorDetail'
 import AddUser from './components/addDoctor'
 import EditUser from './components/editDoctor'
 import Navbar from './components/navbar';
+import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
 
