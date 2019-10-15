@@ -62,7 +62,7 @@ class EditDocor extends Component {
             })
         })
         .catch( error => {
-            console.log(error)
+            this.setState( { error: error.response.data.reason } )
         })
 
         // ???
@@ -73,6 +73,12 @@ class EditDocor extends Component {
         let firstName = this.state.firstName 
         return (
         <div className="container">
+        { /* Error handling */ }
+        { this.state.error != null && 
+            <div className="alert alert-danger" role="alert">
+                { this.state.error }
+            </div>
+        }
         { this.state.success == null &&
             <div className="row">
                 <div className="col-12">
@@ -137,12 +143,6 @@ class EditDocor extends Component {
                 { this.state.success }
                 <br />
                 <Link to={ { pathname: `/doctors` } } style={ {color: 'blue'} }>Back to User overwiev</Link>
-            </div>
-        }
-        { /* TODO: Error handling */ }
-        { this.state.error != null && 
-            <div class="alert alert-danger" role="alert">
-                { this.state.error }
             </div>
         }
         </div>

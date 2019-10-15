@@ -21,10 +21,7 @@ class Doctors extends Component {
         this.setState({ doctors: response.data })
       })
       .catch(error => {
-        switch (error.response.status) {
-          case 401: this.setState({ error: "User is not authenticated" }); break
-          case 404: this.setState({ error: "Invalid route"})
-        }
+        this.setState({ error: error.response.data.reason })
       })
   }
 
@@ -67,7 +64,9 @@ class Doctors extends Component {
                   <td>{ doctor.lastName }</td>
                   <td>{ doctor.email }</td>
                   <td>{ doctor.role }</td>
-                  <td><Link to={`/doctor/patients/${doctor.id}`}>Patients</Link></td>
+                  <td><Link to={ {
+                      pathname: `/doctor/patients/${doctor.id}`
+                  } }>Patients</Link></td>
                   <td><Link to={ {
                     /* TODO: Could we directl write in the Linked Components state ? */
                     pathname: `/user/edit/${doctor.id}`,
@@ -75,7 +74,7 @@ class Doctors extends Component {
                       firstName: doctor.firstName ,
                       lastName: doctor.lastName,
                       email: doctor.email,
-                      role: doctor.role
+                      role: doctor.role,
                     }
                   } }>Edit</Link></td>
                 </tr>

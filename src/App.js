@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { Route } from 'react-router-dom';
-import Doctors from './components/doctors';
+import Welcome from './components/welcome'
+import Doctors from './components/doctors'
 import DoctorPatient from './components/doctorDetail'
 import AddUser from './components/addDoctor'
 import EditUser from './components/editDoctor'
-import Navbar from './components/navbar';
+import AddPatient from './components/addPatient'
+import Navbar from './components/navbar'
 import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
@@ -32,10 +34,12 @@ class App extends Component {
     return (
       <div>
         <Navbar/>
+        <Route exact path = '/' component = { Welcome }></Route>
         <PrivateRoute exact path = '/doctors' component = { Doctors } />
         <PrivateRoute exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
         <PrivateRoute exact path = '/newUser' component = { AddUser } />
         <PrivateRoute exact path = '/user/edit/:userID' component = { EditUser } />
+        <PrivateRoute exact path = '/patient/new/:userID' component = { AddPatient } />
       </div>
     );
   }

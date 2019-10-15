@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
-// TODO IMPORTANT: Error or success message
-// TODO IMPORTANT: Authentification and Roles
-class AddDoctor extends Component {
+class AddPatient extends Component {
 
     constructor(props) {
         super(props)
@@ -14,8 +11,6 @@ class AddDoctor extends Component {
             firstName: "",
             lastName: "",
             email: "",
-            role: "",
-            password: "",
             error: null
         }
     }
@@ -35,32 +30,23 @@ class AddDoctor extends Component {
             { email: email }
         )
     } 
-    setRole(role) {
-        this.setState(
-            { role: role }
-        )
-    }
-    setPassword(pw) {
-      this.setState(
-        { password: pw }
-      )
-    }
 
     async submit() {
         this.setState(
             { disabled: true }
         )
-        await axios.post('http://localhost:8080/api/users/create', {
+
+        const { match: { params } } = this.props    /// ???? I just understand I need this line to access the docID in the URL
+        await axios.post(`http://localhost:8080/api/patient/${ params.userID }`, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            role: this.state.role,
-            password: this.state.password
         }, { withCredentials: true })
         .then( result => {
-            this.props.history.push('/doctors/')
+           this.props.history.push(`/doctor/patients/${ params.userID }`)
         })
         .catch(error => {
+            console.log(error)
           this.setState( { error: error.response.data.reason } )
         })
     }
@@ -108,29 +94,6 @@ class AddDoctor extends Component {
                     placeholder="Valid email address"
                   />
                 </div>
-                { /* TODO: Choose role from dropdown list */}
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Role</label>
-                  <input
-                    disabled={this.state.disabled}
-                    type="text"
-                    onBlur={(e) => {this.setRole(e.target.value)}}
-                    className="form-control"
-                    placeholder="Role (ie. doctor, nurse, admin)"
-                  />
-                </div>
-                { /* password */}
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Password</label>
-                  <input
-                    disabled={this.state.disabled}
-                    type="password"
-                    onBlur={(e) => {this.setPassword(e.target.value)}}
-                    className="form-control"
-                    placeholder="Password"
-                  />
-                </div>
-                { /* TODO: Confirm password */}
                 <button
                   disabled={this.state.disabled}
                   className="btn btn-primary"
@@ -145,4 +108,4 @@ class AddDoctor extends Component {
     )}
 }
 
-export default AddDoctor
+export default AddPatient

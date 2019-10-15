@@ -6,10 +6,9 @@ class DoctorPatient extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            patients: null
+            patients: null,
         }
     }
-
     // see doctor.js for more details about how react handles these functions
     // TODO: Error handling
     async componentDidMount() {
@@ -23,24 +22,51 @@ class DoctorPatient extends Component {
     }
 
     render() {
+        const { match: { params } } = this.props
         return (
             <div className='container'>
             { this.state.patients === null && <h5>Loading ...</h5>}
-            { this.state.patients && this.state.patients.map((patient, i) => (
-            <div key={patient.id} className="card text-white bg-dark mb-3" key={i}>
-              <Link to={`/patients/${patient.id}`}>
-              <div className="card-header">Patient</div>
-              <div className="card-body">
-                <h5 className="card-title">{patient.firstName} {patient.lastName}</h5>
-                <p className="card-text">{patient.email}</p>
-              </div>
-              </Link>
-            </div>
-          ))
-        }
-            </div>
-        )
-    }
+          
+            <Link to={ `/patient/new/${ params.doctorID }` }>
+                <div className="card text-white bg-secondary mb-3">
+                    <div className="card-body">
+                    <h4 className="card-title">+ Add a new patient</h4>
+                    </div>
+                </div>
+            </Link>
+            <table className="table table-dark">
+                <thead>
+                    <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { this.state.patients && this.state.patients.map((patient, i) =>  (
+                        <tr key={ i }>
+                        <td>{ patient.firstName }</td> 
+                        <td>{ patient.lastName }</td>
+                        <td>{ patient.email }</td>
+                        <td>
+                            <Link to={ {
+                                /* TODO: Could we directl write in the Linked Components state ? */
+                                pathname: `/patient/edit/${ this.state.docID }`,
+                                state: { 
+                                    firstName: patient.firstName ,
+                                    lastName: patient.lastName,
+                                    email: patient.email,
+                                }
+                            } }>Edit</Link>
+                        </td>
+                        </tr>
+                        )) 
+                    }
+                </tbody>
+                </table>       
+        </div>
+    )}
 }
 
 export default DoctorPatient

@@ -13,7 +13,7 @@ function Navbar() {
     const [email, setEmail] = useState("")
     const [password, setPassword]  = useState("")
     const [isLoggedIn, setLogin] = useState("")
-    const [error, setError] = useState("")
+    const [error, setError] = useState(null)
 
     function handleLoginSubmit(event) {
         event.preventDefault()
