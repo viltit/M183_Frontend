@@ -80,8 +80,10 @@ function Navbar() {
             { /* Check if user is logged in and show login form / logout button */ }
             { isLoggedIn ?   
                 <div>
-                { /* TODO: USE bootstrap navbar style  */}
-                { user && <p>Logged in as { user.firstName } { user.lastName }</p> }
+                { /* TODO: Space between username and logout button  */}
+                { user && 
+                    <Link to="/setAvatar/1"><img src= { require("./../images/default-avatar.jpg") } width="30px" height="30px" />  Logged in as { user.firstName } { user.lastName } </Link>
+                }
                 <button className="btn btn-outline-success my-2 my-sm-0" 
                     type="submit" onClick={ e => handleLogoutSubmit(e) }>Log out</button>
                 </div>

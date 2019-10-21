@@ -6,6 +6,7 @@ import DoctorPatient from './components/doctorDetail'
 import AddUser from './components/addDoctor'
 import EditUser from './components/editDoctor'
 import AddPatient from './components/addPatient'
+import AddAvatar from './components/addAvatar'
 import Navbar from './components/navbar'
 import PrivateRoute from './PrivateRoute'
 
@@ -35,6 +36,7 @@ class App extends Component {
       <div>
         <Navbar/>
         <Route exact path = '/' component = { Welcome }></Route>
+        <Route exact path = '/setAvatar/:doctorID' component = { AddAvatar } />
         <PrivateRoute exact path = '/doctors' component = { Doctors } />
         <PrivateRoute exact path = '/doctor/patients/:doctorID' component = { DoctorPatient } />
         <PrivateRoute exact path = '/newUser' component = { AddUser } />

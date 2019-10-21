@@ -129,9 +129,9 @@ class EditDocor extends Component {
                     { /* We do NOT allow password changes here */ }
                     <button
                         disabled={this.state.disabled}
-                        className="btn btn-primary"
-                        onClick={() => {this.submit()}}>
-                        Submit
+                            className="btn btn-primary"
+                            onClick={() => {this.submit()}}>
+                            Submit
                     </button>
                     </div>
                 </div>
