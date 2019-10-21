@@ -13,6 +13,7 @@ function Navbar() {
     const [email, setEmail] = useState("")
     const [password, setPassword]  = useState("")
     const [isLoggedIn, setLogin] = useState("")
+    const [user, setUser] = useState(null)
     const [error, setError] = useState(null)
 
     function handleLoginSubmit(event) {
@@ -26,6 +27,9 @@ function Navbar() {
         .then(response => {
           setLogin(true)
           setError(null)
+          let user = response.data
+          setUser(user)
+          console.log(user)
           auth.authenticate()
         })
         .catch(error => {
@@ -42,6 +46,7 @@ function Navbar() {
         axios.get('http://localhost:8080/logout/', { withCredentials: true })
         .then(response => {
             setLogin(false)
+            setUser(null)
             setError(null)
             auth.authenticate()
         })
@@ -74,8 +79,12 @@ function Navbar() {
             { isLoggedIn == false && <Redirect to="/" /> }
             { /* Check if user is logged in and show login form / logout button */ }
             { isLoggedIn ?   
+                <div>
+                { /* TODO: USE bootstrap navbar style  */}
+                { user && <p>Logged in as { user.firstName } { user.lastName }</p> }
                 <button className="btn btn-outline-success my-2 my-sm-0" 
                     type="submit" onClick={ e => handleLogoutSubmit(e) }>Log out</button>
+                </div>
                 :
                 <form className="form-inline" onSubmit={ handleLoginSubmit }>
                     <input className="form-control mr-sm-2" type="email" placeholder="email" 
