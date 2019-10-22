@@ -19,6 +19,7 @@ class AddAvatar extends Component {
 
     async submit() {
         console.log(this.state.image)
+        
     }
 
     render() {
