@@ -50,7 +50,7 @@ class AddDoctor extends Component {
         this.setState(
             { disabled: true }
         )
-        await axios.post('http://localhost:8080/api/users/create', {
+        await axios.post('https://localhost:8090/api/users/create', {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,

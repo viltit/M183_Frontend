@@ -37,7 +37,7 @@ class AddPatient extends Component {
         )
 
         const { match: { params } } = this.props    /// ???? I just understand I need this line to access the docID in the URL
-        await axios.post(`http://localhost:8080/api/patient/${ params.userID }`, {
+        await axios.post(`https://localhost:8090/api/patient/${ params.userID }`, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,

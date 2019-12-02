@@ -19,7 +19,7 @@ function Navbar() {
     function handleLoginSubmit(event) {
         event.preventDefault()
  
-        axios.post('http://localhost:8080/login/', {
+        axios.post('https://localhost:8090/login/', {
             email: email,
             password: password },
             { withCredentials: true 
@@ -43,7 +43,7 @@ function Navbar() {
         /*
             I SPENT 4 HOURS FIGURING OUT WHY THE API CAN NOT LOG OUT until I realized we need withCredentials: true !!!
         */
-        axios.get('http://localhost:8080/logout/', { withCredentials: true })
+        axios.get('https://localhost:8090/logout/', { withCredentials: true })
         .then(response => {
             setLogin(false)
             setUser(null)
@@ -60,6 +60,7 @@ function Navbar() {
 
     return (
         <div>
+            <h1> { document.cookie } </h1>
             <nav className="navbar navbar-expand navbar-dark bg-dark fixed-top">
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">

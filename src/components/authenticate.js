@@ -5,7 +5,7 @@ const auth = {
     isAuthenticated: false,   // TODO: Obsolete, we could get for user = null
     user: null,
     async authenticate() {
-        await axios.get('http://localhost:8080/loginStatus/', { withCredentials: true })
+        await axios.get('https://localhost:8090/loginStatus/', { withCredentials: true })
         .then(response => {
             this.user = response.data
             console.log(this.user)

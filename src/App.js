@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/users')
+    fetch('https://localhost:8090/api/users')
       .then(result => result.json())
       .then((data) => {
         this.setState({ doctors: data })  

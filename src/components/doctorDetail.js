@@ -13,7 +13,7 @@ class DoctorPatient extends Component {
     // TODO: Error handling
     async componentDidMount() {
         const { match: { params } } = this.props
-        const patients = (await axios.get(`http://localhost:8080/api/users/patients/${params.doctorID}`
+        const patients = (await axios.get(`https://localhost:8090/api/users/patients/${params.doctorID}`
             ,{ withCredentials: true }))
             .data
         this.setState(
